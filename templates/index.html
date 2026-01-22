@@ -1,0 +1,7 @@
+{% for news in news_all %}
+<h2>{{ news.title }}</h2>
+{% if news.image %}
+<img width="300px" src="{{ news.image.url}}" alt="{{ news.title }}" />
+{% endif %}
+<p>{{ news.description | safe }}</p>
+{% endfor %}
