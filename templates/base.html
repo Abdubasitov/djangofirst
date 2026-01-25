@@ -28,11 +28,13 @@
 						<li class="nav-item">
 							<a class="nav-link active" aria-current="page" href="{% url "homepage"%}">Home</a>
 						</li>
-						{% for cat in categories%}
-						<li class="nav-item">
-							<a class="nav-link" href="#">{{cat.title}}</a>
-						</li>
-						{%endfor%}
+            {% for cat in categories %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'category_detail' cat.slug %}">
+                    {{ cat.title }}
+                </a>
+            </li>
+            {% endfor %}
 					</ul>
 					<form class="d-flex" role="search">
 						<input
