@@ -7,6 +7,41 @@
 			<h5 class="card-title">{{news.title}}</h5>
 			<p class="card-text">{{news.description|safe}}</p>
 		</div>
+		<!-- col -->
+		<div class="col-lg-4">
+			<h3>Комментарии</h3>
+			<form action="" method="post">
+				{% csrf_token %}
+				<input
+					class="form-control mt-2"
+					type="text"
+					name="name"
+					placeholder="Имя"
+				/>
+				<textarea
+					class="form-control mt-2"
+					name="text"
+					placeholder="Комментарии"
+				></textarea>
+				<button type="submit" class="btn btn-primary mt-2">Отправить</button>
+			</form>
+			{% for comment in comments %}
+			<div class="otvet mt-2 p-2" style="border: 1px solid black">
+				<p>{{ comment.name }}</p>
+				<p>{{ comment.text }}</p>
+				<form
+        action="{% url 'delete_comment' comment.id %}"
+        method="post"
+        style="display:inline;"
+    >
+				{% csrf_token %}
+				<button type="submit" class="btn btn-sm btn-danger">Удалить</button>
+			</div>
+			{% empty %}
+			<p>Комментариев пока нет</p>
+			{% endfor %}
+		</div>
+		<!-- col -->
 	</div>
 </div>
 
