@@ -3,7 +3,7 @@ from django_ckeditor_5.fields import CKEditor5Field
 
 class Category(models.Model):
     title = models.CharField("Название категории", max_length=100)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(unique=True )
 
     def __str__(self):
         return self.title
@@ -40,7 +40,7 @@ class Comment(models.Model):
     name = models.CharField("Имя", max_length=100)
     text = models.TextField("Комментарий")
     created_at = models.DateTimeField(auto_now_add=True)
-    is_published = models.BooleanField(default=False)
+    is_published = models.BooleanField(default=True)
     class Meta:
         verbose_name = "Комментарий"
         verbose_name_plural = "Комментарии"

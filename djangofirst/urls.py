@@ -2,14 +2,20 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from news.views import homepage, news_detail, category_detail
-
+from news.views import (
+    homepage, news_detail, category_detail, news_search,
+    register, user_login, user_logout
+)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("ckeditor5/", include('django_ckeditor_5.urls')),
     path('', homepage, name='homepage'),
     path('category/<slug:slug>/', category_detail, name='category_detail'),
     path('news/<slug:slug>/', news_detail, name='news_detail'),
+    path('search/', news_search, name='news_search'),
+    path('register/', register, name='register'),
+    path('login/', user_login, name='login'),
+    path('logout/', user_logout, name='logout'),
 ]
 
 if settings.DEBUG:
