@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from news.models import News, Category, Comment
 from django.shortcuts import redirect
+from news.forms import CommentForm
 
 def homepage(request):
 	news_all = News.objects.all()
@@ -14,26 +15,24 @@ def homepage(request):
 def news_detail(request, slug):
     news = get_object_or_404(News, slug=slug)
     categories = Category.objects.filter(news__isnull=False).distinct()
-    
-    if request.method == "POST":
-        name = request.POST.get("name")
-        text = request.POST.get("text")
+    comments = news.comments.filter(is_published=True).order_by('-created_at')
 
-        if name and text:
-            Comment.objects.create(
-                news=news,
-                name=name,
-                text=text
-            )
-        return redirect(request.path)
-
-    comments = news.comments.all()
-
-    return render(request, 'single-page.html', {
-        'news': news,
-        'categories': categories,
-        'comments': comments,
-    })
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+             comment = form.save(commit=False)
+             comment.news = news
+             comment.save()
+             return redirect('news_detail', slug=slug)
+    else:
+        form = CommentForm()
+    context = {
+         'news':news,
+         'comments':comments,
+         'form': form
+    }
+        
+    return render(request, 'single-page.html', context)
 
 def category_detail(request, slug):
     category = get_object_or_404(Category, slug=slug)
@@ -45,11 +44,3 @@ def category_detail(request, slug):
         'news_list': news_list,
         'categories': categories,
     })
-
-def delete_comment(request, id):
-    comment = get_object_or_404(Comment, id=id)
-
-    if request.method == "POST":
-        comment.delete()
-
-    return redirect(request.META.get('HTTP_REFERER', '/'))

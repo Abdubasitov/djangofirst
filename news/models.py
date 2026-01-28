@@ -40,7 +40,7 @@ class Comment(models.Model):
     name = models.CharField("Имя", max_length=100)
     text = models.TextField("Комментарий")
     created_at = models.DateTimeField(auto_now_add=True)
-
+    is_published = models.BooleanField(default=False)
     class Meta:
         verbose_name = "Комментарий"
         verbose_name_plural = "Комментарии"
