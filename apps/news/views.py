@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
-from news.models import News, Category, Comment
+from apps.news.models import News, Category, Comment
 from django.shortcuts import redirect
-from news.forms import CommentForm
+from apps.news.forms import CommentForm
 from django.db.models import Q
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
@@ -38,14 +38,14 @@ def news_detail(request, slug):
          'form': form
     }
         
-    return render(request, 'single-page.html', context)
+    return render(request, 'page/single-page.html', context)
 
 def category_detail(request, slug):
     category = get_object_or_404(Category, slug=slug)
     news_list = News.objects.filter(category=category)
     categories = Category.objects.filter(news__isnull=False).distinct()
 
-    return render(request, 'category-page.html', {
+    return render(request, 'page/category-page.html', {
         'category': category,
         'news_list': news_list,
         'categories': categories,
@@ -63,7 +63,7 @@ def news_search(request):
             Q(description__icontains=query)
         )
 
-    return render(request, 'search.html', {
+    return render(request, 'page/search.html', {
         'news_list': news_list,
         'query': query,
         'categories': categories,
@@ -93,7 +93,7 @@ def register(request):
         login(request, user)
         return redirect('homepage')
 
-    return render(request, 'register.html')
+    return render(request, 'page/register.html')
 def user_login(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -113,7 +113,7 @@ def user_login(request):
                 'error': 'Неверный логин или пароль'
             })
 
-    return render(request, 'login.html')
+    return render(request, 'page/login.html')
 def user_logout(request):
     logout(request)
     return redirect('homepage')
