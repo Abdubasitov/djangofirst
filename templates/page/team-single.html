@@ -4,7 +4,50 @@
 	<div class="row">
 		<!-- col -->
 		<div class="col-lg-8">
-			<img style="width: 300px" src="{{team.image.url}}" class="card-img-top" />
+			<div
+				style="width: 300px"
+				id="carouselExampleControls"
+				class="carousel slide"
+				data-bs-ride="carousel"
+			>
+				<div class="carousel-inner">
+					<div class="carousel-item active">
+						<img
+							style="width: 300px; height: 370px; object-fit: cover"
+							src="{{team.image.url}}"
+							class="card-img-top"
+						/>
+					</div>
+					{% for img in team.imageshotsteam_set.all %}
+					<div class="carousel-item">
+						<img
+							style="width: 300px; height: 370px; object-fit: cover"
+							src="{{ img.img.url }}"
+							class="d-block w-100"
+							alt="..."
+						/>
+					</div>
+					{% endfor %}
+				</div>
+				<button
+					class="carousel-control-prev"
+					type="button"
+					data-bs-target="#carouselExampleControls"
+					data-bs-slide="prev"
+				>
+					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					<span class="visually-hidden">Previous</span>
+				</button>
+				<button
+					class="carousel-control-next"
+					type="button"
+					data-bs-target="#carouselExampleControls"
+					data-bs-slide="next"
+				>
+					<span class="carousel-control-next-icon" aria-hidden="true"></span>
+					<span class="visually-hidden">Next</span>
+				</button>
+			</div>
 			<h5 class="card-title">{{team.name}}</h5>
 			<p class="card-text">{{team.position}} - {{team.exp}}</p>
 			<p>{{team.biog|safe}}</p>
