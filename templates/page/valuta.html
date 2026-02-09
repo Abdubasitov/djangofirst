@@ -1,0 +1,146 @@
+{% extends "base.html" %} {% block content %}
+<style>
+	.currency-wrapper {
+		max-width: 600px;
+		margin: 40px auto;
+		background: #ffffff;
+		padding: 24px 32px;
+		border-radius: 12px;
+		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+		font-family:
+			system-ui,
+			-apple-system,
+			BlinkMacSystemFont,
+			sans-serif;
+	}
+
+	.currency-wrapper h1 {
+		text-align: center;
+		margin-bottom: 24px;
+		font-size: 24px;
+		color: #1f2937;
+	}
+
+	table.currency-table {
+		width: 100%;
+		border-collapse: collapse;
+	}
+
+	.currency-table th {
+		text-align: left;
+		padding: 12px 16px;
+		background: #f3f4f6;
+		font-weight: 600;
+		color: #374151;
+	}
+
+	.currency-table td {
+		padding: 12px 16px;
+		border-bottom: 1px solid #e5e7eb;
+		color: #111827;
+	}
+
+	.currency-table tr:last-child td {
+		border-bottom: none;
+	}
+
+	.currency-code {
+		font-weight: 600;
+		letter-spacing: 0.05em;
+	}
+
+	.rate {
+		text-align: right;
+		font-variant-numeric: tabular-nums;
+	}
+	.valuta-calculator {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+		margin-top: 16px;
+	}
+
+	input,
+	select,
+	button {
+		padding: 8px 12px;
+		border-radius: 6px;
+		border: 1px solid #ccc;
+	}
+
+	button {
+		background: #2563eb;
+		color: white;
+		cursor: pointer;
+		border: none;
+	}
+	.result {
+		margin-top: 20px;
+	}
+	.result span {
+		font-size: 16px;
+		font-weight: 600;
+	}
+</style>
+
+<div class="currency-wrapper">
+	<h1>Курс валют (НБ КР)</h1>
+
+	<table class="currency-table">
+		<tr>
+			<th>Валюта</th>
+			<th style="text-align: right">Курс к сому</th>
+		</tr>
+		<tr>
+			<td class="currency-code">USD</td>
+			<td class="rate">{{ usd }}</td>
+		</tr>
+		<tr>
+			<td class="currency-code">EUR</td>
+			<td class="rate">{{ eur }}</td>
+		</tr>
+		<tr>
+			<td class="currency-code">RUB</td>
+			<td class="rate">{{ rub }}</td>
+		</tr>
+		<tr>
+			<td class="currency-code">KZT</td>
+			<td class="rate">{{ kzt }}</td>
+		</tr>
+	</table>
+</div>
+
+<div class="currency-wrapper">
+	<h1>Калькулятор валют</h1>
+
+	<form class="valuta-calculator" method="GET">
+		<label for="amount">Сумма:</label>
+		<input type="number" step="0.01" name="amount" id="amount" required />
+
+		<label for="from_currency">Из:</label>
+		<select name="from_currency" id="from_currency">
+			<option value="USD">USD</option>
+			<option value="EUR">EUR</option>
+			<option value="RUB">RUB</option>
+			<option value="KZT">KZT</option>
+			<option value="KGS">KGS</option>
+		</select>
+
+		<label for="to_currency">В:</label>
+		<select name="to_currency" id="to_currency">
+			<option value="USD">USD</option>
+			<option value="EUR">EUR</option>
+			<option value="RUB">RUB</option>
+			<option value="KZT">KZT</option>
+			<option value="KGS">KGS</option>
+		</select>
+
+		<button type="submit">Посчитать</button>
+	</form>
+
+	{% if result %}
+	<p class="result">Результат: <span>{{ result }}</span></p>
+	{% endif %}
+</div>
+
+{% endblock %}

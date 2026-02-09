@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
-from apps.news.models import News, Category, Comment
+from apps.news.models import News, Category
+from django.core.paginator import Paginator
 from django.shortcuts import redirect
 from apps.news.forms import CommentForm
 from django.db.models import Q
@@ -7,13 +8,17 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
 
 def homepage(request):
-	news_all = News.objects.all()
-	categories = Category.objects.filter(news__isnull=False).distinct()
-	context = {
-		'news_all':news_all,
-		'categories':categories,
-	}
-	return render(request, 'index.html', context)
+    news_all = News.objects.all()
+    categories = Category.objects.filter(news__isnull=False).distinct()
+    paginator = Paginator(news_all, 3)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+    'page_obj':page_obj,
+    'categories':categories,
+    }
+    return render(request, 'index.html', context)
 
 def news_detail(request, slug):
     news = get_object_or_404(News, slug=slug)
