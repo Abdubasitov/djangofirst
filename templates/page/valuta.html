@@ -1,8 +1,14 @@
 {% extends "base.html" %} {% block content %}
 <style>
+	.container {
+		display: flex;
+		justify-content: center;
+		gap: 70px;
+		align-items: start;
+	}
 	.currency-wrapper {
-		max-width: 600px;
-		margin: 40px auto;
+		width: 450px;
+		margin: 40px;
 		background: #ffffff;
 		padding: 24px 32px;
 		border-radius: 12px;
@@ -74,73 +80,78 @@
 		cursor: pointer;
 		border: none;
 	}
+
 	.result {
 		margin-top: 20px;
-	}
-	.result span {
-		font-size: 16px;
+		padding: 12px;
+		border-radius: 8px;
+		background-color: #f0f9ff;
 		font-weight: 600;
+		font-size: 18px;
+		text-align: center;
 	}
 </style>
 
-<div class="currency-wrapper">
-	<h1>Курс валют (НБ КР)</h1>
+<div class="container">
+	<div class="currency-wrapper">
+		<h1>Курс валют (НБ КР)</h1>
 
-	<table class="currency-table">
-		<tr>
-			<th>Валюта</th>
-			<th style="text-align: right">Курс к сому</th>
-		</tr>
-		<tr>
-			<td class="currency-code">USD</td>
-			<td class="rate">{{ usd }}</td>
-		</tr>
-		<tr>
-			<td class="currency-code">EUR</td>
-			<td class="rate">{{ eur }}</td>
-		</tr>
-		<tr>
-			<td class="currency-code">RUB</td>
-			<td class="rate">{{ rub }}</td>
-		</tr>
-		<tr>
-			<td class="currency-code">KZT</td>
-			<td class="rate">{{ kzt }}</td>
-		</tr>
-	</table>
-</div>
+		<table class="currency-table">
+			<tr>
+				<th>Валюта</th>
+				<th style="text-align: right">Курс к сому</th>
+			</tr>
+			<tr>
+				<td class="currency-code">USD</td>
+				<td class="rate">{{ usd }}</td>
+			</tr>
+			<tr>
+				<td class="currency-code">EUR</td>
+				<td class="rate">{{ eur }}</td>
+			</tr>
+			<tr>
+				<td class="currency-code">RUB</td>
+				<td class="rate">{{ rub }}</td>
+			</tr>
+			<tr>
+				<td class="currency-code">KZT</td>
+				<td class="rate">{{ kzt }}</td>
+			</tr>
+		</table>
+	</div>
 
-<div class="currency-wrapper">
-	<h1>Калькулятор валют</h1>
+	<div class="currency-wrapper">
+		<h1>Калькулятор валют</h1>
 
-	<form class="valuta-calculator" method="GET">
-		<label for="amount">Сумма:</label>
-		<input type="number" step="0.01" name="amount" id="amount" required />
+		<form class="valuta-calculator" method="GET">
+			<label for="amount">Сумма:</label>
+			<input type="number" step="0.01" name="amount" id="amount" required />
 
-		<label for="from_currency">Из:</label>
-		<select name="from_currency" id="from_currency">
-			<option value="USD">USD</option>
-			<option value="EUR">EUR</option>
-			<option value="RUB">RUB</option>
-			<option value="KZT">KZT</option>
-			<option value="KGS">KGS</option>
-		</select>
+			<label for="from_currency">Из:</label>
+			<select name="from_currency" id="from_currency">
+				<option value="USD">USD</option>
+				<option value="EUR">EUR</option>
+				<option value="RUB">RUB</option>
+				<option value="KZT">KZT</option>
+				<option value="KGS">KGS</option>
+			</select>
 
-		<label for="to_currency">В:</label>
-		<select name="to_currency" id="to_currency">
-			<option value="USD">USD</option>
-			<option value="EUR">EUR</option>
-			<option value="RUB">RUB</option>
-			<option value="KZT">KZT</option>
-			<option value="KGS">KGS</option>
-		</select>
+			<label for="to_currency">В:</label>
+			<select name="to_currency" id="to_currency">
+				<option value="USD">USD</option>
+				<option value="EUR">EUR</option>
+				<option value="RUB">RUB</option>
+				<option value="KZT">KZT</option>
+				<option value="KGS">KGS</option>
+			</select>
 
-		<button type="submit">Посчитать</button>
-	</form>
+			<button type="submit">Посчитать</button>
+		</form>
 
-	{% if result %}
-	<p class="result">Результат: <span>{{ result }}</span></p>
-	{% endif %}
+		{% if result %}
+		<p class="result">{{ result }}</p>
+		{% endif %}
+	</div>
 </div>
 
 {% endblock %}
