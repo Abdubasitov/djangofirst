@@ -3,7 +3,7 @@ from .currency import get_rates
 
 def valuta_page(request):
     rates = get_rates()
-    rates["KGS"] = 1.0  # Сом к самому себе
+    rates["KGS"] = 1.0 
 
     result = None
 
@@ -14,7 +14,6 @@ def valuta_page(request):
     if amount and from_currency and to_currency:
         try:
             amount = float(amount)
-            # Перевод из выбранной валюты в сомы, потом в целевую валюту
             amount_in_kgs = amount * rates[from_currency]
             result = round(amount_in_kgs / rates[to_currency], 2)
         except (ValueError, KeyError):

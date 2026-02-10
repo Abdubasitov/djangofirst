@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 	'apps.about',
 	'apps.contact',
 	'apps.valuta',
+	'apps.weather',
 	'django_ckeditor_5',
     
 ]
